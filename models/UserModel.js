@@ -5,12 +5,12 @@ const UserModelSchema = new Schema({
   lastname: String,
   LicenseNo: String,
   Age: Number,
-  dob: Date,
-  car_details: {
+  dob: String,
+  carDetails: {
     make: String,
     model: String,
     year: Number,
-    platno: String,
+    plateno: String,
   },
 });
 const UserModel = mongoose.model("UserModel", UserModelSchema);

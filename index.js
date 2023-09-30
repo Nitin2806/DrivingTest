@@ -34,14 +34,16 @@ app.get("/g2", (req, res) => {
 });
 
 // Route to post G2 form data
-app.post("/license/new", (req, res) => {
-  console.log(req.body);
+app.post("/license/new", async (req, res) => {
+  // console.log(req.body);
+  await UserModel.create(req.body);
   res.render("index");
-  // await UserModel.create(req.body);
 });
 
 // Route to G Page
-app.get("/g", (req, res) => {
+app.get("/g", async (req, res) => {
+  console.log(req.body);
+  await UserModel.find({});
   res.render("gtest");
 });
 

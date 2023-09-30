@@ -35,17 +35,33 @@
                 <div class="form-floating">
                   <input
                     class="form-control"
-                    id="name"
+                    id="firstname"
                     type="text"
-                    placeholder="Enter your name..."
+                    placeholder="Enter your first name..."
                     data-sb-validations="required"
                   />
-                  <label for="name">Name</label>
+                  <label for="firstname">Name</label>
                   <div
                     class="invalid-feedback"
                     data-sb-feedback="name:required"
                   >
-                    A name is required.
+                    A First name is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="lastname"
+                    type="text"
+                    placeholder="Enter your last name..."
+                    data-sb-validations="required"
+                  />
+                  <label for="lastname">Last Name</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    A lastname is required.
                   </div>
                 </div>
                 <div class="form-floating">
@@ -125,7 +141,7 @@
                 </div>
                 <!-- Submit Button-->
                 <button
-                  class="btn btn-primary text-uppercase disabled"
+                  class="btn btn-primary text-uppercase"
                   id="submitButton"
                   type="submit"
                 >
