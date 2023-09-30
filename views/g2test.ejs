@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layouts/head'); -%>
+
+  <body>
+    <!-- Navigation-->
+    <%- include('layouts/navbar'); -%>
+
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/about-bg.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>G2 Test</h1>
+              <span class="subheading">G2 Test Page</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content-->
+    <main class="mb-4">
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- <p>Create a new account and get you license to drive around.</p> -->
+            <div class="my-5">
+              <form action="/license/new" method="POST">
+                <!-- Section for Personal Details -->
+                <label for="name">Personal Details</label>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="firstname"
+                    type="text"
+                    placeholder="Enter your First Name..."
+                    data-sb-validations="required"
+                  />
+                  <label for="firstname">First Name</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    First name is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="lastname"
+                    type="text"
+                    placeholder="Enter your last name..."
+                    data-sb-validations="required"
+                  />
+                  <label for="lastname">Last Name</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    Last name is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="LicenseNo"
+                    type="text"
+                    placeholder="Enter your license number."
+                    data-sb-validations="required"
+                  />
+                  <label for="LicenseNo">License Number</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    License number is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="Age"
+                    type="number"
+                    placeholder="Enter your age"
+                    data-sb-validations="required"
+                  />
+                  <label for="Age">Age</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    Age is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="dob"
+                    type="date"
+                    placeholder="Enter your Date of Birth."
+                    data-sb-validations="required"
+                  />
+                  <label for="dob">Date of Birth</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    DOB is required.
+                  </div>
+                </div>
+                <br />
+
+                <!-- Section for Car Details -->
+                <label>Car Details</label>
+
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="make"
+                    type="text"
+                    placeholder="Enter your car Make"
+                    data-sb-validations="required"
+                  />
+                  <label for="make">Make</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    Car Make is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="model"
+                    type="text"
+                    placeholder="Enter your car model"
+                    data-sb-validations="required"
+                  />
+                  <label for="model">Model</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    Car Model is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="year"
+                    type="number"
+                    placeholder="Enter your car year"
+                    data-sb-validations="required"
+                  />
+                  <label for="year">Year</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    Car Year is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="plateno"
+                    type="text"
+                    placeholder="Enter your car plate number"
+                    data-sb-validations="required"
+                  />
+                  <label for="plateno">Plate Number</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    Plate Number is required.
+                  </div>
+                </div>
+                <br />
+                <!-- Submit success message-->
+                <!---->
+                <!-- This is what your users will see when the form-->
+                <!-- has successfully submitted-->
+                <div class="d-none" id="submitSuccessMessage">
+                  <div class="text-center mb-3">
+                    <div class="fw-bolder">Form submission successful!</div>
+                  </div>
+                </div>
+                <!-- Submit error message-->
+                <!---->
+                <!-- This is what your users will see when there is-->
+                <!-- an error submitting the form-->
+                <div class="d-none" id="submitErrorMessage">
+                  <div class="text-center text-danger mb-3">
+                    Error sending message!
+                  </div>
+                </div>
+                <!-- Submit Button-->
+                <button
+                  class="btn btn-primary text-uppercase"
+                  id="submitButton"
+                  type="submit"
+                >
+                  Send
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Footer-->
+    <%- include('layouts/footer') -%>
+    <!-- JS-->
+    <%- include('layouts/scripts') -%>
+  </body>
+</html>
