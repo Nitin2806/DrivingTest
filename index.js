@@ -42,9 +42,33 @@ app.post("/license/new", async (req, res) => {
 
 // Route to G Page
 app.get("/g", async (req, res) => {
-  console.log(req.body);
-  await UserModel.find({});
   res.render("gtest");
+});
+// Route to G Page
+app.post("/g/license", async (req, res) => {
+  // console.log(req.body.LicenseNo);
+
+  try {
+    const licenseNo = req.body.LicenseNo;
+
+    if (!licenseNo) {
+      return res.status(400).send("License Number is required.");
+    }
+
+    const user = await UserModel.findOne({ LicenseNo: licenseNo });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    console.log("Found USER DATA", user);
+
+    // Assuming 'gtest' is a template that you are rendering
+    res.render("userInfo", { user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Route to Login Page
