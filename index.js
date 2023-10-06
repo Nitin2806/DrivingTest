@@ -15,13 +15,12 @@ app.set("view engine", "ejs");
 try {
   mongoose.connect(URI);
   console.log("MongoDB connected");
+  app.listen(3000, () => {
+    console.log("App listening on port 3000");
+  });
 } catch {
   console.log("Error! Failed connecting to database");
 }
-
-app.listen(3000, () => {
-  console.log("App listening on port 3000");
-});
 
 // Route to Home/Dashboard Page
 app.get("/", (req, res) => {
