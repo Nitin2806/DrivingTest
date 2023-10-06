@@ -17,7 +17,6 @@
             <div class="my-5">
               <h1>User Information</h1>
               <div id="user-info">
-                <!-- Display user information here in view mode -->
                 <p>
                   First Name: <span id="firstname"><%= user.firstname %></span>
                 </p>
@@ -41,12 +40,10 @@
                 </p>
               </div>
 
-              <!-- Add an Edit button to toggle between view and edit mode -->
               <button class="btn btn-primary text-uppercase" id="edit-button">
                 Edit
               </button>
 
-              <!-- Add a form for editing user information (initially hidden) -->
               <form
                 id="edit-form"
                 style="display: none"
@@ -59,6 +56,7 @@
                   id="edit-firstname"
                   value="<%= user.firstname %>"
                   required
+                  disabled
                 />
                 <input
                   type="text"
@@ -66,20 +64,23 @@
                   id="edit-lastname"
                   value="<%= user.lastname %>"
                   required
+                  disabled
                 />
                 <input
                   type="number"
-                  name="age"
+                  name="Age"
                   id="edit-age"
                   value="<%= user.Age %>"
                   required
+                  disabled
                 />
                 <input
                   type="text"
-                  name="licenseNumber"
+                  name="licenseNo"
                   id="edit-licenseNumber"
-                  value="<%= user.LicenseNumber %>"
+                  value="<%= user.LicenseNo %>"
                   required
+                  readonly
                 />
                 <p>Car Details:</p>
                 <input
@@ -110,41 +111,23 @@
                   value="<%= user.carDetails.plateno %>"
                   required
                 />
-                <button type="submit">Save Changes</button>
+
+                <br />
+                <button class="btn btn-primary text-uppercase" type="submit">
+                  Save Changes
+                </button>
               </form>
 
-              <!-- Add a link to go back to the previous page (if needed) -->
               <a class="btn btn-primary text-uppercase" href="/g">Go Back</a>
             </div>
 
             <!-- Footer-->
-            <%- include('layouts/footer') -%>
-
-            <!-- JS to toggle between view and edit mode -->
-            <script>
-              const userInfo = document.getElementById("user-info");
-              const editButton = document.getElementById("edit-button");
-              const editForm = document.getElementById("edit-form");
-
-              editButton.addEventListener("click", () => {
-                if (userInfo.style.display === "none") {
-                  // Switch to view mode
-                  userInfo.style.display = "block";
-                  editForm.style.display = "none";
-                  editButton.innerText = "Edit";
-                } else {
-                  // Switch to edit mode
-                  userInfo.style.display = "none";
-                  editForm.style.display = "block";
-                  editButton.innerText = "Cancel Edit";
-                }
-              });
-            </script>
           </div>
         </div>
       </div>
     </main>
+
     <!-- JS-->
-    <%- include('layouts/scripts') -%>
+    <%- include('./layouts/scripts') -%> <%- include('./layouts/footer') -%>
   </body>
 </html>
