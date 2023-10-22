@@ -15,7 +15,7 @@
           <div class="col-md-10 col-lg-8 col-xl-7">
             <div class="post-heading">
               <h1>G Test</h1>
-              <h2 class="subheading">This is G Test Page</h2>
+              <!-- <h2 class="subheading">This is G Test Page</h2> -->
             </div>
           </div>
         </div>
@@ -27,7 +27,11 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
             <div class="my-5">
-              <form action="/g/license" method="post">
+              <form
+                action="/g/license"
+                method="post"
+                onsubmit="return validateForm()"
+              >
                 <div class="form-floating">
                   <input
                     class="form-control"
@@ -35,36 +39,10 @@
                     type="text"
                     name="LicenseNo"
                     placeholder="Enter your license number"
-                    data-sb-validations="required"
                   />
                   <label for="LicenseNo">License Number</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="name:required"
-                  >
-                    A license number is required.
-                  </div>
                 </div>
-
                 <br />
-                <!-- Submit success message-->
-                <!---->
-                <!-- This is what your users will see when the form-->
-                <!-- has successfully submitted-->
-                <!-- <div class="d-none" id="submitSuccessMessage">
-                  <div class="text-center mb-3">
-                    <div class="fw-bolder">Form submission successful!</div>
-                    To activate this form, sign up at
-                    <br />
-                    <a href="https://startbootstrap.com/solution/contact-forms"
-                      >https://startbootstrap.com/solution/contact-forms</a
-                    >
-                  </div>
-                </div> -->
-                <!-- Submit error message-->
-                <!---->
-                <!-- This is what your users will see when there is-->
-                <!-- an error submitting the form-->
                 <div class="d-none" id="submitErrorMessage">
                   <div class="text-center text-danger mb-3">Error!</div>
                 </div>
@@ -81,6 +59,120 @@
           </div>
         </div>
       </div>
+      <% if (user) { %>
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="my-5">
+              <h1>User Information</h1>
+              <div id="user-info">
+                <p>
+                  First Name: <span id="firstname"><%= user.firstname %></span>
+                </p>
+                <p>
+                  Last Name: <span id="lastname"><%= user.lastname %></span>
+                </p>
+                <p>Age: <span id="age"><%= user.Age %></span></p>
+                <p>
+                  License Number:
+                  <span id="licenseNumber"><%= user.LicenseNo %></span>
+                </p>
+                <h2><b>Car Details</b></h2>
+                <p>Make: <span id="make"><%= user.carDetails.make %></span></p>
+                <p>
+                  Model: <span id="model"><%= user.carDetails.model %></span>
+                </p>
+                <p>Year: <span id="year"><%= user.carDetails.year %></span></p>
+                <p>
+                  Plate Number:
+                  <span id="plateno"><%= user.carDetails.plateno %></span>
+                </p>
+              </div>
+
+              <button class="btn btn-primary text-uppercase" id="edit-button">
+                Edit
+              </button>
+
+              <form
+                id="edit-form"
+                style="display: none"
+                action="/edit"
+                method="POST"
+              >
+                <input
+                  type="text"
+                  name="firstname"
+                  id="edit-firstname"
+                  value="<%= user.firstname %>"
+                  required
+                  disabled
+                />
+                <input
+                  type="text"
+                  name="lastname"
+                  id="edit-lastname"
+                  value="<%= user.lastname %>"
+                  required
+                  disabled
+                />
+                <input
+                  type="number"
+                  name="Age"
+                  id="edit-age"
+                  value="<%= user.Age %>"
+                  required
+                  disabled
+                />
+                <input
+                  type="text"
+                  name="licenseNo"
+                  id="edit-licenseNumber"
+                  value="<%= user.LicenseNo %>"
+                  required
+                  readonly
+                />
+                <p>Car Details:</p>
+                <input
+                  type="text"
+                  name="make"
+                  id="edit-make"
+                  value="<%= user.carDetails.make %>"
+                  required
+                />
+                <input
+                  type="text"
+                  name="model"
+                  id="edit-model"
+                  value="<%= user.carDetails.model %>"
+                  required
+                />
+                <input
+                  type="text"
+                  name="year"
+                  id="edit-year"
+                  value="<%= user.carDetails.year %>"
+                  required
+                />
+                <input
+                  type="text"
+                  name="plateno"
+                  id="edit-plateno"
+                  value="<%= user.carDetails.plateno %>"
+                  required
+                />
+
+                <br />
+                <button class="btn btn-primary text-uppercase" type="submit">
+                  Save Changes
+                </button>
+              </form>
+
+              <a class="btn btn-primary text-uppercase" href="/g">Go Back</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }else{ console.log("Refresh") }%>
     </main>
 
     <!-- Footer-->

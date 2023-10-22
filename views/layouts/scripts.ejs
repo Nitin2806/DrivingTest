@@ -55,3 +55,23 @@
     });
   });
 </script>
+
+<script>
+  function validateForm() {
+    // Get the value of the LicenseNo input field
+    var licenseNo = document.getElementById("LicenseNo").value;
+
+    // Check if the LicenseNo field is empty
+    if (licenseNo.trim() === "") {
+      // Display the error message
+      document.getElementById("error-message").innerText =
+        "A license number is required.";
+
+      // Prevent the form from being submitted
+      return false;
+    }
+
+    // If the field is not empty, allow the form to be submitted
+    return true;
+  }
+</script>

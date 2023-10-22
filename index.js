@@ -3,12 +3,19 @@ const app = express();
 const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const expressSession = require("express-session");
 const UserModel = require("./models/UserModel");
 const URI = "mongodb+srv://mnitin2311:Iamnitin@cluster0.yp1u0bv.mongodb.net/";
 
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(
+  expressSession({
+    secret: "keyboard cat",
+  })
+);
 
 app.set("view engine", "ejs");
 
@@ -41,37 +48,34 @@ app.post("/license/new", async (req, res) => {
 
 // Route to G Page
 app.get("/g", async (req, res) => {
-  res.render("gtest");
+  res.render("gtest", { user: false });
 });
+
 // Route to G Page
 app.post("/g/license", async (req, res) => {
   // console.log(req.body.LicenseNo);
-
   try {
     const licenseNo = req.body.LicenseNo;
-
     if (!licenseNo) {
       return res.status(400).send("License Number is required.");
     }
-
     const user = await UserModel.findOne({ LicenseNo: licenseNo });
-
     if (!user) {
       return res.status(404).render("userNotFound");
     }
-
-    res.render("userInfo", { user });
+    res.render("gtest", { user });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 });
+
 app.post("/edit", async (req, res) => {
   const data = req.body;
   const license = data.licenseNo;
-  const UserData = await UserModel.findOne({
-    LicenseNo: license,
-  });
+  // const UserData = await UserModel.findOne({
+  //   LicenseNo: license,
+  // });
   // console.log(UserData);
   try {
     const updateData = await UserModel.updateOne(
@@ -90,7 +94,7 @@ app.post("/edit", async (req, res) => {
       console.log("Data not updated");
       return res.status(404).render("gtest");
     } else {
-      res.render("gtest");
+      res.redirect("g");
     }
   } catch (error) {
     console.error("Error updating data:", error);
