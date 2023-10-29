@@ -31,7 +31,11 @@
           <div class="col-md-10 col-lg-8 col-xl-7">
             <p>Create a new account and get you license to drive around.</p>
             <div class="my-5">
-              <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+              <form
+                id="registrationForm"
+                action="/users/register"
+                data-sb-form-api-token="API_TOKEN"
+              >
                 <div class="form-floating">
                   <input
                     class="form-control"
@@ -41,7 +45,7 @@
                     placeholder="Enter your first name"
                     data-sb-validations="required"
                   />
-                  <label for="firstname">Name</label>
+                  <label for="firstname"> First Name</label>
                   <div
                     class="invalid-feedback"
                     data-sb-feedback="name:required"
@@ -69,25 +73,6 @@
                 <div class="form-floating">
                   <input
                     class="form-control"
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    data-sb-validations="required,email"
-                  />
-                  <label for="email">Email address/Username</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="email:required"
-                  >
-                    An email is required.
-                  </div>
-                  <div class="invalid-feedback" data-sb-feedback="email:email">
-                    Email is not valid.
-                  </div>
-                </div>
-                <div class="form-floating">
-                  <input
-                    class="form-control"
                     id="phone"
                     type="tel"
                     placeholder="Enter your phone number..."
@@ -104,7 +89,26 @@
                 <div class="form-floating">
                   <input
                     class="form-control"
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Username"
+                    data-sb-validations="required"
+                  />
+                  <label for="username">Username</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="username:required"
+                  >
+                    An username is required.
+                  </div>
+                </div>
+
+                <div class="form-floating">
+                  <input
+                    class="form-control"
                     id="password"
+                    name="password"
                     type="password"
                     placeholder="Enter your password"
                     data-sb-validations="required"
