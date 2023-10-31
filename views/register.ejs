@@ -33,42 +33,32 @@
             <div class="my-5">
               <form
                 id="registrationForm"
+                method="post"
                 action="/users/register"
-                data-sb-form-api-token="API_TOKEN"
               >
                 <div class="form-floating">
                   <input
                     class="form-control"
                     id="firstname"
-                    name="firstname"
+                    name="firstName"
                     type="text"
                     placeholder="Enter your first name"
                     data-sb-validations="required"
                   />
                   <label for="firstname"> First Name</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="name:required"
-                  >
-                    A First name is required.
-                  </div>
+                  <div class="firstNameError"></div>
                 </div>
                 <div class="form-floating">
                   <input
                     class="form-control"
                     id="lastname"
-                    name="lastname"
+                    name="lastName"
                     type="text"
                     placeholder="Enter your last name"
                     data-sb-validations="required"
                   />
                   <label for="lastname">Last Name</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="name:required"
-                  >
-                    A lastname is required.
-                  </div>
+                  <div class="lastNameError"></div>
                 </div>
                 <div class="form-floating">
                   <input
@@ -77,31 +67,44 @@
                     type="tel"
                     placeholder="Enter your phone number..."
                     data-sb-validations="required"
+                    name="phoneNumber"
                   />
                   <label for="phone">Phone Number</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="phone:required"
-                  >
-                    A phone number is required.
-                  </div>
+                  <div class="phoneError"></div>
                 </div>
+                <br />
+                <div>
+                  <label
+                    style="font-size: 1.3rem; color: #798188"
+                    for="userType"
+                    >User Type</label
+                  >
+                  <select
+                    class="form-select"
+                    aria-label=".form-select-lg example"
+                    id="userType"
+                    name="userType"
+                    style="border-radius: 5px"
+                  >
+                    <option selected>Select Type</option>
+                    <option value="driver">Driver</option>
+                    <option value="examiner">Examiner</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                  <div class="userTypeError"></div>
+                </div>
+
                 <div class="form-floating">
                   <input
                     class="form-control"
                     id="username"
-                    name="username"
+                    name="userName"
                     type="text"
                     placeholder="Username"
                     data-sb-validations="required"
                   />
-                  <label for="username">Username</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="username:required"
-                  >
-                    An username is required.
-                  </div>
+                  <label for="username">Username/Email</label>
+                  <div class="usernameError"></div>
                 </div>
 
                 <div class="form-floating">
@@ -113,13 +116,20 @@
                     placeholder="Enter your password"
                     data-sb-validations="required"
                   />
-                  <label for="password">Password</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="password:required"
-                  >
-                    A password is required.
-                  </div>
+                  <label for="confirmPassword">Password</label>
+                  <div class="passwordError"></div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Confirm  your password"
+                    data-sb-validations="required"
+                  />
+                  <label for="password">Confirm Password</label>
+                  <div class="confirmPasswordError"></div>
                 </div>
                 <br />
                 <!-- Submit success message-->
@@ -129,22 +139,14 @@
                 <div class="d-none" id="submitSuccessMessage">
                   <div class="text-center mb-3">
                     <div class="fw-bolder">Form submission successful!</div>
-                    To activate this form, sign up at
-                    <br />
-                    <a href="https://startbootstrap.com/solution/contact-forms"
-                      >https://startbootstrap.com/solution/contact-forms</a
-                    >
                   </div>
                 </div>
-                <!-- Submit error message-->
-                <!---->
-                <!-- This is what your users will see when there is-->
-                <!-- an error submitting the form-->
                 <div class="d-none" id="submitErrorMessage">
                   <div class="text-center text-danger mb-3">
                     Error sending message!
                   </div>
                 </div>
+                <div class="error-message"><%= error %></div>
                 <!-- Submit Button-->
                 <button
                   class="btn btn-primary text-uppercase"

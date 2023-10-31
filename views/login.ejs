@@ -40,12 +40,12 @@
               This page is under construction!!
             </p>
             <div class="my-5">
-              <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+              <form id="contactForm" action="/users/login" method="post">
                 <div class="form-floating">
                   <input
                     class="form-control"
                     id="username"
-                    name="username"
+                    name="userName"
                     type="text"
                     placeholder="Username"
                     data-sb-validations="required"
@@ -66,7 +66,6 @@
                     name="password"
                     type="password"
                     placeholder="Password"
-                    data-sb-validations="required"
                   />
                   <label for="phone">Password</label>
                   <div
@@ -84,11 +83,6 @@
                 <div class="d-none" id="submitSuccessMessage">
                   <div class="text-center mb-3">
                     <div class="fw-bolder">Form submission successful!</div>
-                    To activate this form, sign up at
-                    <br />
-                    <a href="https://startbootstrap.com/solution/contact-forms"
-                      >https://startbootstrap.com/solution/contact-forms</a
-                    >
                   </div>
                 </div>
                 <!-- Submit error message-->
@@ -102,7 +96,7 @@
                 </div>
                 <!-- Submit Button-->
                 <button
-                  class="btn btn-primary text-uppercase disabled"
+                  class="btn btn-primary text-uppercase"
                   id="submitButton"
                   type="submit"
                 >
@@ -120,6 +114,6 @@
     <!-- Footer-->
     <%- include('layouts/footer') -%>
     <!-- JS-->
-    <%- include('layouts/scripts') -%>
+    <%- include('./layouts/scripts') -%>
   </body>
 </html>
