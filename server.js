@@ -17,8 +17,12 @@ app.use(
     saveUninitialized: true,
   })
 );
+let userType;
+
 app.use("*", (req, res, next) => {
   loggedIn = req.session.userId;
+  userType = req.session.userType;
+  console.log(req.session.userType);
   next();
 });
 
@@ -59,12 +63,13 @@ const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthen
 const logoutController = require("./controllers/logout");
 
 // ---------------------------- R O U T E S ----------------------------------------------
+
 // Route to Home/Dashboard Page
 app.get("/", home);
 // Route to Singup Page
-app.get("/signup", redirectIfAuthenticatedMiddleware, signUp);
+app.get("/signup", signUp);
 // Route to Login Page
-app.get("/login", redirectIfAuthenticatedMiddleware, login);
+app.get("/login", login);
 // Route to G2 Page
 app.get("/g2", g2test);
 // Route to G Page

@@ -3,9 +3,6 @@ const createAccountModel = require("../models/UserAccount");
 module.exports = async (req, res) => {
   const userDetails = req.body;
   const UserName = userDetails.userName;
-  console.log(userDetails);
-  // console.log("User Details for New Account", userDetails);
-
   if (
     !userDetails.firstName ||
     !userDetails.lastName ||
@@ -13,7 +10,7 @@ module.exports = async (req, res) => {
     !userDetails.userName ||
     !userDetails.password
   ) {
-    return res.redirect("/signup");
+    return res.render("/signup", { error: "All fields are mandatory" });
   }
 
   const checkUniqueUser = await createAccountModel.findOne({
@@ -23,7 +20,6 @@ module.exports = async (req, res) => {
   console.log("here is uique user: ", checkUniqueUser);
 
   if (checkUniqueUser != null && checkUniqueUser.userName === UserName) {
-    ("User already exists");
     res.render("register", { error: "User already exists" });
   } else {
     const user = await createAccountModel.findOne().sort({ accountID: -1 });
@@ -32,8 +28,7 @@ module.exports = async (req, res) => {
     // Add the newAccountID to the userDetails
     userDetails.accountID = newAccountID;
     try {
-      const status = await createAccountModel.create(userDetails);
-      console.log(status);
+      await createAccountModel.create(userDetails);
       res.redirect("/login");
     } catch (err) {
       console.log(err);
