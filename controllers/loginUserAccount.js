@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
     res.render("login", { error: "Please enter your Password" });
   } else {
     const findUser = await createAccountModel.findOne({ userName: userName });
+    userObject = findUser;
     if (findUser === null) {
       res.render("login", { error: "Wrong email or ID" });
     } else {

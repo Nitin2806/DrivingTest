@@ -1,11 +1,9 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
-const ejs = require("ejs");
 const mongoose = require("mongoose");
 const expressSession = require("express-session");
-
-require("dotenv").config();
-global.loggedIn = null;
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -17,12 +15,15 @@ app.use(
     saveUninitialized: true,
   })
 );
-let userType;
+
+// Declaring Global variables
+global.loggedIn = null;
+global.userType = null;
+global.userObject = null;
 
 app.use("*", (req, res, next) => {
   loggedIn = req.session.userId;
   userType = req.session.userType;
-  console.log(req.session.userType);
   next();
 });
 
@@ -39,20 +40,20 @@ try {
 
 try {
   app.listen(3000, () => {
-    console.log("App listening on port 3000");
+    console.log("Server connected to port 3000");
   });
 } catch (err) {
-  console.log("Error! Failed connecting to server port 3000", err);
+  console.log("Error! Failed connecting to server on port 3000", err);
 }
 
-//---------------------------  C O N T R O L L E R S ---------------------------------------
+//----------------------------- C O N T R O L L E R S ---------------------------------------
 
 const modifyUserDetails = require("./controllers/modifyDetail");
 const createNewUser = require("./controllers/newUser");
 const findUser = require("./controllers/findUser");
 const home = require("./controllers/home");
-const gtest = require("./controllers/gtest");
-const g2test = require("./controllers/g2test");
+const gTest = require("./controllers/gtest");
+const g2Test = require("./controllers/g2test");
 const login = require("./controllers/login");
 const signUp = require("./controllers/signUp");
 const pageNotFound = require("./controllers/notFound");
@@ -62,29 +63,34 @@ const authMiddleware = require("./middleware/authMiddleware");
 const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticatedMiddleware");
 const logoutController = require("./controllers/logout");
 
-// ---------------------------- R O U T E S ----------------------------------------------
+// ---------------------------- R O U T E S -------------------------------------------------
 
 // Route to Home/Dashboard Page
 app.get("/", home);
 // Route to Singup Page
-app.get("/signup", signUp);
+app.get("/signup", redirectIfAuthenticatedMiddleware, signUp);
 // Route to Login Page
-app.get("/login", login);
+app.get("/login", redirectIfAuthenticatedMiddleware, login);
 // Route to G2 Page
-app.get("/g2", g2test);
+app.get("/g2", authMiddleware, g2Test);
 // Route to G Page
-app.get("/g", gtest);
+app.get("/g", authMiddleware, gTest);
 //Route to Log out
 app.get("/auth/logout", logoutController);
-// create new user
+// Route to Create new user
 app.post("/license/new", createNewUser);
-//edit  user data
+// Route to modify user licence Details
 app.post("/edit", modifyUserDetails);
 // Route to G Page
 app.post("/g/license", findUser);
 // Route to create new signup account
-app.post("/users/register", createNewAccount);
+app.post(
+  "/users/register",
+  redirectIfAuthenticatedMiddleware,
+  createNewAccount
+);
 // Route to  login controller
-app.post("/users/login", loginController);
+app.post("/users/login", redirectIfAuthenticatedMiddleware, loginController);
 // Route to page not found
 app.get("*", pageNotFound);
+// ---------------------------------------------------------------------------------------------

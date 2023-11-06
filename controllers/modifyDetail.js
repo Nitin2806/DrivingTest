@@ -1,17 +1,24 @@
-const UserModel = require("../models/UserModel");
+const UserAccount = require("../models/UserAccount");
 
 module.exports = async (req, res) => {
   const data = req.body;
-  const license = data.licenseNo;
+  // console.log("MOdify Details | ", data);
+  const accountID = userObject.accountID;
+  // console.log("MOdify Details |ID ", accountID);
+
   try {
-    const updateData = await UserModel.updateOne(
-      { LicenseNo: license },
+    const updateData = await UserAccount.updateOne(
+      { accountID: accountID },
       {
         $set: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          licenceNo: data.licenceNo,
+          age: data.age,
           "carDetails.make": data.make,
           "carDetails.model": data.model,
           "carDetails.year": data.year,
-          "carDetails.plateno": data.plateno,
+          "carDetails.plateNo": data.plateNo,
         },
       }
     );

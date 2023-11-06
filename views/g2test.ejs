@@ -29,15 +29,16 @@
           <div class="col-md-10 col-lg-8 col-xl-7">
             <!-- <p>Create a new account and get you license to drive around.</p> -->
             <div class="my-5">
-              <form action="/license/new" method="POST">
+              <form action="/edit" method="POST">
                 <!-- Section for Personal Details -->
                 <label for="name">Personal Details</label>
                 <div class="form-floating">
                   <input
                     class="form-control"
                     id="firstname"
-                    name="firstname"
+                    name="firstName"
                     type="text"
+                    value="<%- userObject.firstName -%>"
                     placeholder="Enter your First Name..."
                     required
                   />
@@ -53,8 +54,9 @@
                   <input
                     class="form-control"
                     id="lastname"
-                    name="lastname"
+                    name="lastName"
                     type="text"
+                    value="<%- userObject.lastName -%>"
                     placeholder="Enter your last name..."
                     required
                   />
@@ -70,12 +72,13 @@
                   <input
                     class="form-control"
                     id="LicenseNo"
-                    name="LicenseNo"
+                    name="licenceNo"
                     type="text"
+                    value="<%- userObject.licenceNo -%>"
                     placeholder="Enter your license number."
                     required
                   />
-                  <label for="LicenseNo">License Number</label>
+                  <label for="LicenseNo">Licence Number</label>
                   <div
                     class="invalid-feedback"
                     data-sb-feedback="name:required"
@@ -87,8 +90,9 @@
                   <input
                     class="form-control"
                     id="Age"
-                    name="Age"
+                    name="age"
                     type="number"
+                    value="<%- userObject.age -%>"
                     placeholder="Enter your age"
                     data-sb-validations="required"
                   />
@@ -100,23 +104,6 @@
                     Age is required.
                   </div>
                 </div>
-                <div class="form-floating">
-                  <input
-                    class="form-control"
-                    id="dob"
-                    name="dob"
-                    type="date"
-                    placeholder="Enter your Date of Birth."
-                    required
-                  />
-                  <label for="dob">Date of Birth</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="name:required"
-                  >
-                    DOB is required.
-                  </div>
-                </div>
                 <br />
 
                 <!-- Section for Car Details -->
@@ -126,8 +113,9 @@
                   <input
                     class="form-control"
                     id="make"
-                    name="carDetails.make"
+                    name="make"
                     type="text"
+                    value="<%- userObject.carDetails.make -%>"
                     placeholder="Enter your car Make"
                     required
                   />
@@ -143,7 +131,8 @@
                   <input
                     class="form-control"
                     id="model"
-                    name="carDetails.model"
+                    name="model"
+                    value="<%- userObject.carDetails.model -%>"
                     type="text"
                     placeholder="Enter your car model"
                     required
@@ -160,7 +149,8 @@
                   <input
                     class="form-control"
                     id="year"
-                    name="carDetails.year"
+                    name="year"
+                    value="<%- userObject.carDetails.year -%>"
                     type="number"
                     placeholder="Enter your car year"
                     required
@@ -177,7 +167,8 @@
                   <input
                     class="form-control"
                     id="plateno"
-                    name="carDetails.plateno"
+                    name="plateNo"
+                    value="<%- userObject.carDetails.plateNo -%>"
                     type="text"
                     placeholder="Enter your car plate number"
                     required
@@ -197,7 +188,7 @@
                 <!-- has successfully submitted-->
                 <div class="d-none" id="submitSuccessMessage">
                   <div class="text-center mb-3">
-                    <div class="fw-bolder">Form submission successful!</div>
+                    <div class="fw-bolder">Form submission successfull!</div>
                   </div>
                 </div>
                 <!-- Submit error message-->

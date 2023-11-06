@@ -41,20 +41,11 @@
               <%= error %>
             </p>
             <% }else{ %>
-            <p
-              style="
-                color: red;
-                font-weight: bold;
-                text-align: center;
-                font-size: 25px;
-              "
-            >
-              Welcome to Driving Test Center
-            </p>
+            <p>Welcome to Book DriveTest</p>
             <% } %>
 
             <div class="my-5">
-              <form id="contactForm" action="/users/login" method="post">
+              <form id="loginForm" action="/users/login" method="post">
                 <div class="form-floating">
                   <input
                     class="form-control"
@@ -71,12 +62,13 @@
                   >
                     Please enter your username
                   </div>
+                  <div class="usernameError"></div>
                 </div>
 
                 <div class="form-floating">
                   <input
                     class="form-control"
-                    id="phone"
+                    id="password"
                     name="password"
                     type="password"
                     placeholder="Password"
@@ -88,6 +80,7 @@
                   >
                     Please enter your password
                   </div>
+                  <div class="passwordError"></div>
                 </div>
                 <br />
                 <!-- Submit success message-->

@@ -17,8 +17,6 @@ module.exports = async (req, res) => {
     userName: UserName,
   });
 
-  console.log("here is uique user: ", checkUniqueUser);
-
   if (checkUniqueUser != null && checkUniqueUser.userName === UserName) {
     res.render("register", { error: "User already exists" });
   } else {

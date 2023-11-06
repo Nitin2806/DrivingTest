@@ -7,6 +7,8 @@ const SignUpModelSchema = new Schema({
   firstName: String,
   lastName: String,
   phoneNumber: Number,
+  licenceNo: String,
+  age: Number,
   userType: String,
   userName: {
     type: String,
@@ -17,7 +19,14 @@ const SignUpModelSchema = new Schema({
     type: String,
     required: true,
   },
+  carDetails: {
+    make: String,
+    model: String,
+    year: Number,
+    plateNo: String,
+  },
 });
+
 SignUpModelSchema.pre("save", function (next) {
   const user = this;
   bcrypt.hash(user.password, 10, (error, hash) => {
