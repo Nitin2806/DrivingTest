@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
 
   const UserDetail = await createAccountModel.findById(req.session.userId);
 
-  console.log("authMiddleware | Details from ", UserDetail);
+  // console.log("authMiddleware | Details from ", UserDetail);
   if (UserDetail === null) {
     console.log("Got inside the null");
     return res.redirect("/");
