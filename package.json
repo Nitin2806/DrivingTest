@@ -4,7 +4,7 @@
   "description": "This is full stack assignment done for the Level 2 course Full Stack at Conestoga College -Nitin Mishra",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
