@@ -1,4 +1,3 @@
-module.exports = (req, res) => {
-  console.log("Appointment Route | ");
-  res.render("appointment");
+module.exports = async (req, res) => {
+  res.render("appointment", { error: "" });
 };

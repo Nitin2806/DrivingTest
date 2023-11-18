@@ -242,6 +242,10 @@ dd {
   margin-bottom: 0.5rem;
   margin-left: 0;
 }
+.header {
+  padding: 40px;
+  background-color: #000;
+}
 
 blockquote {
   margin: 0 0 1rem;

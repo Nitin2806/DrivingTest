@@ -2,10 +2,7 @@ const UserAccount = require("../models/UserAccount");
 
 module.exports = async (req, res) => {
   const data = req.body;
-  // console.log("MOdify Details | ", data);
   const accountID = userObject.accountID;
-  // console.log("MOdify Details |ID ", accountID);
-
   try {
     const updateData = await UserAccount.updateOne(
       { accountID: accountID },

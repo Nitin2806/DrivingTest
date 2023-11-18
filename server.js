@@ -65,6 +65,8 @@ const modifyUserDetails = require("./controllers/modifyDetail");
 const createNewUser = require("./controllers/newUser");
 const findUser = require("./controllers/findUser");
 const logoutController = require("./controllers/logout");
+const addTimeSlot = require("./controllers/appointmentAvailability");
+const checkAppointment = require("./controllers/checkAppointment");
 
 // ---------------------------- R O U T E S -------------------------------------------------
 
@@ -76,17 +78,19 @@ app.get("/signup", redirectIfAuthenticatedMiddleware, signUpView);
 app.get("/login", redirectIfAuthenticatedMiddleware, loginView);
 // View:Route to appointment
 app.get("/appointment", authMiddleware, appointmentView);
+app.get("/checkAppointment/:date", checkAppointment);
 // View:Route to G2 Page
 app.get("/g2", authMiddleware, g2TestView);
 // View:Route to G Page
 app.get("/g", authMiddleware, gTestView);
 //Route to Log out
 app.get("/auth/logout", logoutController);
-
 // Route to Create new user
 app.post("/license/new", createNewUser);
 // Route to modify user licence Details
 app.post("/edit", modifyUserDetails);
+// Adding Time Slot
+app.post("/admin/appointments", addTimeSlot);
 // Route to G Page
 app.post("/g/license", findUser);
 // Route to create new signup account

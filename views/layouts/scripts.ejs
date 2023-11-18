@@ -1,4 +1,4 @@
-<!-- Bootstrap core JS-->
+s<!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
@@ -175,4 +175,36 @@
       loginForm.submit();
     });
   });
+</script>
+
+<script>
+  // Define updateTimeSlotAvailability function
+  async function updateTimeSlotAvailability() {
+    // Enable all checkboxes initially
+    document.querySelectorAll(".form-check-input").forEach((checkbox) => {
+      checkbox.disabled = false;
+    });
+    // Fetch existing appointments for the selected date
+    const selectedDate = document.getElementById("appointmentDate").value;
+    const response = await fetch(`checkAppointment/${selectedDate}`);
+    if (response.ok) {
+      const existingAppointments = await response.json();
+      const times = existingAppointments.time;
+
+      if (times) {
+        times.forEach((appointment) => {
+          const time = appointment;
+          const checkbox = document.getElementById(time);
+
+          if (checkbox) {
+            checkbox.disabled = true;
+          }
+        });
+      }
+    } else {
+      document.querySelectorAll(".form-check-input").forEach((checkbox) => {
+        checkbox.disabled = false;
+      });
+    }
+  }
 </script>
