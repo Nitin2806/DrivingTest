@@ -244,6 +244,11 @@ s
 
       selectSlotList.appendChild(taskDiv);
     });
+    if (result.length > 0) {
+      timeSlotsSection.style.display = "block";
+    } else {
+      timeSlotsSection.style.display = "none";
+    }
   }
 
   // event listener to the form to disable other radio buttons when one is selected
