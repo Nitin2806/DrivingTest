@@ -5,6 +5,11 @@ const app = express();
 const mongoose = require("mongoose");
 const expressSession = require("express-session");
 
+// Declaring Global variables
+global.loggedIn = null;
+global.userType = null;
+global.userObject = null;
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
@@ -20,11 +25,6 @@ app.use(
     },
   })
 );
-
-// Declaring Global variables
-global.loggedIn = null;
-global.userType = null;
-global.userObject = null;
 
 app.use("*", (req, res, next) => {
   loggedIn = req.session.userId;
