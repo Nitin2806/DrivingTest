@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
           console.log("login", req.session);
           res.redirect("/");
         } else {
+          console.error("Wrong Password");
           res.render("login", { error: "Wrong Password" });
         }
       });
