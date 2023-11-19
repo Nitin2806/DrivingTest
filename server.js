@@ -10,9 +10,14 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   expressSession({
-    secret: "keyboard cat",
+    secret: "nitincrypto",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure: true,
+      sameSite: "strict",
+    },
   })
 );
 
