@@ -1,9 +1,19 @@
 const UserAccount = require("../models/UserAccount");
+const BookedTimeSlot = require("../models/BookedTimeSlot");
 
 module.exports = async (req, res) => {
   const data = req.body;
+  //get accountID from global variable
   const accountID = userObject.accountID;
+
+  if (userObject.appointmentTime !== data.timeSlot) {
+    const deleteBooked = await BookedTimeSlot.deleteOne({
+      date: userObject.appointmentDate,
+      time: userObject.appointmentTime,
+    });
+  }
   try {
+    // Update user details in the database
     const updateData = await UserAccount.updateOne(
       { accountID: accountID },
       {
@@ -16,16 +26,22 @@ module.exports = async (req, res) => {
           "carDetails.model": data.model,
           "carDetails.year": data.year,
           "carDetails.plateNo": data.plateNo,
+          appointmentDate: data.date,
+          appointmentTime: data.timeSlot,
         },
       }
     );
-    if (!updateData.acknowledged) {
-      return res.status(404).render("gtest");
+    const updateTimeSlotModel = await BookedTimeSlot.create({
+      date: data.date,
+      time: data.timeSlot,
+    });
+    if (!updateData.acknowledged && !updateTimeSlotModel.acknowledged) {
+      return res.render("gtest");
     } else {
+      userObject = await UserAccount.findOne({ accountID: accountID });
       res.redirect("g");
     }
   } catch (error) {
-    console.error("Error updating data:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error: ${error.message}`);
   }
 };

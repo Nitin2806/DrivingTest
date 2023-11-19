@@ -44,7 +44,7 @@
               <%= error %>
             </p>
             <% }else{ %>
-            <p>Welcome to Book DriveTest</p>
+            <p>Welcome to DriveTest</p>
             <% } %>
 
             <div class="my-5">
@@ -56,15 +56,9 @@
                     name="userName"
                     type="text"
                     placeholder="Username"
-                    data-sb-validations="required"
                   />
                   <label for="username">Username</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="name:required"
-                  >
-                    Please enter your username
-                  </div>
+                  <div class="invalid-feedback">Please enter your username</div>
                   <div class="usernameError"></div>
                 </div>
 
@@ -77,12 +71,7 @@
                     placeholder="Password"
                   />
                   <label for="phone">Password</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="phone:required"
-                  >
-                    Please enter your password
-                  </div>
+                  <div class="invalid-feedback">Please enter your password</div>
                   <div class="passwordError"></div>
                 </div>
                 <br />
@@ -110,7 +99,7 @@
                   id="submitButton"
                   type="submit"
                 >
-                  Send
+                  Login
                 </button>
                 <span class="c-account">
                   <a href="/signup">Don't have an account?</a>

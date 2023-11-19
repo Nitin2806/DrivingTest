@@ -2,7 +2,7 @@
 <html lang="en">
   <%- include('layouts/head'); -%>
   <head>
-    <title>Home</title>
+    <title>DriveTest Booking Kiosk</title>
   </head>
 
   <body>
@@ -15,29 +15,53 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
             <div class="site-heading">
-              <h1>Dashboard</h1>
-              <span class="subheading">DriveTest Booking Kiosk</span>
+              <h1>Welcome to the DriveTest Booking Kiosk</h1>
+              <span class="subheading"
+                >Your One-Stop Solution for Driver License Appointments</span
+              >
             </div>
           </div>
         </div>
       </div>
     </header>
+
     <!-- Main Content-->
     <div class="container px-4 px-lg-5">
       <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-          <!-- Post preview-->
-          <div class="post-preview">
-            <a>
-              <h2 class="post-title">Book your Driver Licence appointment</h2>
-              <h3 class="post-subtitle">
-                You can book G2/G road test from this Kiosk
-              </h3>
-            </a>
-          </div>
+          <!-- Description Section-->
+          <section class="mb-5">
+            <h2 class="section-heading">About Us</h2>
+            <p class="text-muted">
+              DriveTest Booking Kiosk is your convenient platform for scheduling
+              driver license appointments. Whether you're preparing for a G2 or
+              G road test, we've got you covered. Discover hassle-free
+              appointment booking and account creation at your fingertips.
+            </p>
+          </section>
+
+          <!-- Functionalities Section-->
+          <section class="mb-5">
+            <h2 class="section-heading">Key Functionalities</h2>
+            <ul>
+              <li>Book appointments for G2 and G road tests.</li>
+              <li>Create and manage your G2 account with ease.</li>
+              <!-- Add more functionalities as needed -->
+            </ul>
+          </section>
+
+          <!-- Call-to-Action Section-->
+          <section class="text-center">
+            <h2 class="section-heading">Get Started Today!</h2>
+            <p class="text-muted">
+              Experience the simplicity of our booking system.
+            </p>
+            <a class="btn btn-primary" href="/g2">Book Appointment</a>
+          </section>
         </div>
       </div>
     </div>
+
     <!-- Footer-->
     <%- include('layouts/footer') -%>
     <!-- JS-->

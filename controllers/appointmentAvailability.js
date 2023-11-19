@@ -3,22 +3,29 @@ const Appointment = require("../models/Appointment");
 module.exports = async (req, res) => {
   try {
     const { date, time } = req.body;
+    if (!date || !time) {
+      return res.render("appointment", {
+        error: "Invalid date or time format",
+      });
+    }
     const existingAppointment = await Appointment.findOne({
       date,
       time,
     });
-    const dateAvailable = await Appointment.findOne({ date });
+    const checkIfDateAvailable = await Appointment.findOne({ date });
+    let message = "Appointment set successfully";
 
     if (existingAppointment) {
       return res.render("appointment", {
         error: "Time slot already exists for the given dates",
       });
-    } else if (dateAvailable) {
-      const fetchTime = dateAvailable.time;
+    } else if (checkIfDateAvailable) {
+      const fetchTime = checkIfDateAvailable.time;
 
       let newTimeString = "";
 
-      const existingTimeSlots = dateAvailable.time;
+      const existingTimeSlots = checkIfDateAvailable.time;
+      // Filter out existing time slots to get new available time slots
       newTimeString = await time.filter(function (obj) {
         return fetchTime.indexOf(obj) == -1;
       });
@@ -30,7 +37,7 @@ module.exports = async (req, res) => {
           isTimeSlotAvailable: true,
         }
       );
-      return res.render("appointment");
+      return res.render("appointment", { message });
     } else {
       await Appointment.create({
         date,
@@ -41,10 +48,8 @@ module.exports = async (req, res) => {
       return res.render("appointment");
     }
   } catch (error) {
-    console.log(error);
-
     return res.render("appointment", {
-      error: "Internal Server Erorr! Cannot set Appointment",
+      error: "Internal Server Error! Cannot set Appointment",
     });
   }
 };

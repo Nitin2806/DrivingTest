@@ -25,6 +25,8 @@ const SignUpModelSchema = new Schema({
     year: Number,
     plateNo: String,
   },
+  appointmentDate: String,
+  appointmentTime: String,
 });
 
 SignUpModelSchema.pre("save", function (next) {

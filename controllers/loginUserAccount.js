@@ -19,7 +19,6 @@ module.exports = async (req, res) => {
           req.session.userType = findUser.userType;
           res.redirect("/");
         } else {
-          console.log("Wrong Password");
           res.render("login", { error: "Wrong Password" });
         }
       });

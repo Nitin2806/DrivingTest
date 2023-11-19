@@ -67,6 +67,7 @@ const findUser = require("./controllers/findUser");
 const logoutController = require("./controllers/logout");
 const addTimeSlot = require("./controllers/appointmentAvailability");
 const checkAppointment = require("./controllers/checkAppointment");
+const checkTimeSlot = require("./controllers/checkTimeSlot");
 
 // ---------------------------- R O U T E S -------------------------------------------------
 
@@ -78,7 +79,10 @@ app.get("/signup", redirectIfAuthenticatedMiddleware, signUpView);
 app.get("/login", redirectIfAuthenticatedMiddleware, loginView);
 // View:Route to appointment
 app.get("/appointment", authMiddleware, appointmentView);
+
 app.get("/checkAppointment/:date", checkAppointment);
+
+app.get("/checkTimeSlotAvailable/:date", checkTimeSlot);
 // View:Route to G2 Page
 app.get("/g2", authMiddleware, g2TestView);
 // View:Route to G Page
