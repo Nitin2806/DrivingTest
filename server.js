@@ -20,6 +20,7 @@ app.use(
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       secure: true, // Ensure the cookie is sent only over HTTPS
       sameSite: "strict", // Enforce same-site policy
+      domain: "https://drivertest.cyclic.app",
     },
   })
 );
