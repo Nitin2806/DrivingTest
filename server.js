@@ -18,6 +18,7 @@ app.use(
     secret: "nitin crypto",
     resave: false,
     saveUninitialized: true,
+    name: "thisshouldwork",
     cookie: {
       secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
