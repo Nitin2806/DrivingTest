@@ -12,22 +12,20 @@ app.set("trust proxy", 1); // trust first proxy
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
-app.use(flash());
 app.use(
   expressSession({
     secret: "nitin crypto",
     resave: false,
     saveUninitialized: true,
     proxy: true,
-    name: "thisshouldwork",
     cookie: {
-      secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       httpOnly: false,
       sameSite: "none",
     },
   })
 );
+app.use(flash());
 
 // Declaring Global variables
 global.loggedIn = null;
