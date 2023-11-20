@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
+let uniqueValidator = require("mongoose-unique-validator");
 
 const SignUpModelSchema = new Schema({
   accountID: Number,
@@ -12,12 +13,12 @@ const SignUpModelSchema = new Schema({
   userType: String,
   userName: {
     type: String,
-    required: true,
+    required: [true, "Please provide username"],
     unique: true,
   },
   password: {
     type: String,
-    required: true,
+    required: [true, "Please provide username"],
   },
   carDetails: {
     make: String,
@@ -29,6 +30,7 @@ const SignUpModelSchema = new Schema({
   appointmentTime: String,
 });
 
+SignUpModelSchema.plugin(uniqueValidator);
 SignUpModelSchema.pre("save", function (next) {
   const user = this;
   bcrypt.hash(user.password, 10, (error, hash) => {

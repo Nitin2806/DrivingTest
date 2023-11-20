@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const expressSession = require("express-session");
+const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.set("trust proxy", 1); // trust first proxy
@@ -11,16 +12,17 @@ app.set("trust proxy", 1); // trust first proxy
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
+app.use(flash());
 app.use(
   expressSession({
     secret: "nitin crypto",
     resave: false,
     saveUninitialized: true,
     cookie: {
+      secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      secure: true, // Ensure the cookie is sent only over HTTPS
-      sameSite: "strict", // Enforce same-site policy
-      domain: "https://drivertest.cyclic.app",
+      httpOnly: false,
+      sameSite: "none",
     },
   })
 );
