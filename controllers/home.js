@@ -1,4 +1,4 @@
 module.exports = (req, res) => {
-  console.log("Home", req.session);
+  console.log("HomePage", req.session.userId, loggedIn);
   res.render("index");
 };

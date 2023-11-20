@@ -5,26 +5,27 @@ const app = express();
 const mongoose = require("mongoose");
 const expressSession = require("express-session");
 
-// Declaring Global variables
-global.loggedIn = null;
-global.userType = null;
-global.userObject = null;
+app.set("view engine", "ejs");
+app.set("trust proxy", 1); // trust first proxy
 
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   expressSession({
-    secret: "nitincrypto",
+    secret: "nitin crypto",
     resave: false,
     saveUninitialized: true,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      secure: true,
-      sameSite: "strict",
     },
   })
 );
+
+// Declaring Global variables
+global.loggedIn = null;
+global.userType = null;
+global.userObject = null;
 
 app.use("*", (req, res, next) => {
   loggedIn = req.session.userId;
@@ -32,13 +33,10 @@ app.use("*", (req, res, next) => {
   next();
 });
 
-app.set("view engine", "ejs");
-
 //---------------------------  SERVER AND DATABASE CONNECTION -----------------------------
 
 try {
   mongoose.connect(process.env.URI);
-  console.log("MongoDB connected");
 } catch (err) {
   console.log("Error! Failed connecting to database", err);
 }
@@ -82,18 +80,19 @@ app.get("/", home);
 app.get("/signup", redirectIfAuthenticatedMiddleware, signUpView);
 // View:Route to Login Page
 app.get("/login", redirectIfAuthenticatedMiddleware, loginView);
-// View:Route to appointment
-app.get("/appointment", authMiddleware, appointmentView);
 
-app.get("/checkAppointment/:date", checkAppointment);
-
-app.get("/checkTimeSlotAvailable/:date", checkTimeSlot);
 // View:Route to G2 Page
 app.get("/g2", authMiddleware, g2TestView);
 // View:Route to G Page
 app.get("/g", authMiddleware, gTestView);
 //Route to Log out
 app.get("/auth/logout", logoutController);
+// View:Route to appointment
+app.get("/appointment", authMiddleware, appointmentView);
+// Controller: Route to checkappoitment dates
+app.get("/checkAppointment/:date", checkAppointment);
+// Controller: Route to checkappoitment slots
+app.get("/checkTimeSlotAvailable/:date", checkTimeSlot);
 // Route to Create new user
 app.post("/license/new", createNewUser);
 // Route to modify user licence Details
