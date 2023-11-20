@@ -18,6 +18,7 @@ app.use(
     secret: "nitin crypto",
     resave: false,
     saveUninitialized: true,
+    proxy: true,
     name: "thisshouldwork",
     cookie: {
       secure: true,
