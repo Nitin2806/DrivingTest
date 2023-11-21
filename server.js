@@ -8,7 +8,6 @@ const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.set("trust proxy", 1); // trust first proxy
-const _env = app.get("env");
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -21,6 +20,8 @@ app.use(
     proxy: true,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      httpOnly: false,
+      sameSite: "none",
     },
   })
 );
@@ -31,24 +32,11 @@ global.loggedIn = null;
 global.userType = null;
 global.userObject = null;
 
-const sessionDB = require("./models/session");
-
-let env = process.env.NODE_ENV || "development";
-
-console.log(_env);
-if (_env == "development") {
-  app.use("*", (req, res, next) => {
-    loggedIn = req.session.userId;
-    userType = req.session.userType;
-    next();
-  });
-} else {
-  app.use("*", (req, res, next) => {
-    loggedIn = sessionDB.userId;
-    userType = sessionDB.userType;
-    next();
-  });
-}
+app.use("*", (req, res, next) => {
+  loggedIn = req.session.userId;
+  userType = req.session.userType;
+  next();
+});
 
 //---------------------------  SERVER AND DATABASE CONNECTION -----------------------------
 
