@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const createAccountModel = require("../models/UserAccount");
+const sessionDB = require("../models/session");
 
 module.exports = async (req, res) => {
   const { userName, password } = req.body;
@@ -20,6 +21,10 @@ module.exports = async (req, res) => {
       if (passwordMatches) {
         req.session.userId = findUser._id;
         req.session.userType = findUser.userType;
+        await sessionDB.create({
+          userId: findUser._id,
+          userType: findUser.userType,
+        });
         return res.redirect("/");
       } else {
         console.error("Wrong Password");

@@ -20,8 +20,6 @@ app.use(
     proxy: true,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      httpOnly: false,
-      sameSite: "none",
     },
   })
 );
@@ -32,11 +30,24 @@ global.loggedIn = null;
 global.userType = null;
 global.userObject = null;
 
-app.use("*", (req, res, next) => {
-  loggedIn = req.session.userId;
-  userType = req.session.userType;
-  next();
-});
+const sessionDB = require("./models/session");
+
+var env = process.env.NODE_ENV || "development";
+
+console.log(env);
+if (env == "development") {
+  app.use("*", (req, res, next) => {
+    loggedIn = req.session.userId;
+    userType = req.session.userType;
+    next();
+  });
+} else {
+  app.use("*", (req, res, next) => {
+    loggedIn = sessionDB.userId;
+    userType = sessionDB.userType;
+    next();
+  });
+}
 
 //---------------------------  SERVER AND DATABASE CONNECTION -----------------------------
 
