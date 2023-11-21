@@ -8,6 +8,7 @@ const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.set("trust proxy", 1); // trust first proxy
+const _env = app.get("env");
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -32,10 +33,10 @@ global.userObject = null;
 
 const sessionDB = require("./models/session");
 
-var env = process.env.NODE_ENV || "development";
+let env = process.env.NODE_ENV || "development";
 
-console.log(env);
-if (env == "development") {
+console.log(_env);
+if (_env == "development") {
   app.use("*", (req, res, next) => {
     loggedIn = req.session.userId;
     userType = req.session.userType;
