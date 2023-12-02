@@ -176,36 +176,57 @@ s
 </script>
 
 <script>
-  // Define updateTimeSlotAvailability function
-  async function updateTimeSlotAvailability() {
-    // Enable all checkboxes initially
-    document.querySelectorAll(".form-check-input").forEach((checkbox) => {
-      checkbox.disabled = false;
-    });
-    // Fetch existing appointments for the selected date
-    const selectedDate = document.getElementById("appointmentDate").value;
-    const response = await fetch(`checkAppointment/${selectedDate}`);
-    if (response.ok) {
-      const existingAppointments = await response.json();
-      const times = existingAppointments.time;
+  document.addEventListener("DOMContentLoaded", function () {
+    // Set the default date to the current date
+    document.getElementById("appointmentDate").valueAsDate = new Date();
 
-      if (times) {
-        times.forEach((appointment) => {
-          const time = appointment;
-          const checkbox = document.getElementById(time);
-
-          if (checkbox) {
-            checkbox.disabled = true;
-          }
+    // Define updateTimeSlotAvailability function
+    async function updateTimeSlotAvailability() {
+      try {
+        // Enable all checkboxes initially
+        document.querySelectorAll(".form-check-input").forEach((checkbox) => {
+          checkbox.disabled = false;
         });
+
+        // Fetch existing appointments for the selected date
+        const selectedDate = document.getElementById("appointmentDate").value;
+        const response = await fetch(`checkAppointment/${selectedDate}`);
+
+        if (response.ok) {
+          const existingAppointments = await response.json();
+          const times = existingAppointments.time;
+          console.log("all times script", times);
+
+          if (times) {
+            times.forEach((appointment) => {
+              const time = appointment;
+              const checkbox = document.getElementById(time);
+
+              if (checkbox) {
+                checkbox.disabled = true;
+              }
+            });
+          }
+        } else {
+          // Handle non-OK response (e.g., display an error message)
+          console.error(`Error fetching appointments: ${response.statusText}`);
+        }
+      } catch (error) {
+        // Handle fetch error (e.g., display an error message or log for debugging)
+        console.error("Fetch error:", error);
       }
-    } else {
-      document.querySelectorAll(".form-check-input").forEach((checkbox) => {
-        checkbox.disabled = false;
-      });
     }
-  }
+
+    // Initial update on page load
+    updateTimeSlotAvailability();
+
+    // Attach the function to the change event of the date input
+    document
+      .getElementById("appointmentDate")
+      .addEventListener("change", updateTimeSlotAvailability);
+  });
 </script>
+
 <script>
   async function getTimeSlot() {
     const form = document.querySelector("form");

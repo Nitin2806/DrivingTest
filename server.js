@@ -1,4 +1,8 @@
 require("dotenv").config();
+// Declaring Global variables
+global.loggedIn = null;
+global.userType = null;
+global.userObject = null;
 
 const express = require("express");
 const app = express();
@@ -20,17 +24,10 @@ app.use(
     proxy: true,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      httpOnly: false,
-      sameSite: "none",
     },
   })
 );
 app.use(flash());
-
-// Declaring Global variables
-global.loggedIn = null;
-global.userType = null;
-global.userObject = null;
 
 app.use("*", (req, res, next) => {
   loggedIn = req.session.userId;
@@ -76,6 +73,7 @@ const logoutController = require("./controllers/logout");
 const addTimeSlot = require("./controllers/appointmentAvailability");
 const checkAppointment = require("./controllers/checkAppointment");
 const checkTimeSlot = require("./controllers/checkTimeSlot");
+const examinarView = require("./controllers/examinarController");
 
 // ---------------------------- R O U T E S -------------------------------------------------
 
@@ -87,13 +85,14 @@ app.get("/signup", redirectIfAuthenticatedMiddleware, signUpView);
 app.get("/login", redirectIfAuthenticatedMiddleware, loginView);
 
 // View:Route to G2 Page
-app.get("/g2", authMiddleware, g2TestView);
+app.get("/g2", authMiddleware.authUserMiddleware, g2TestView);
 // View:Route to G Page
-app.get("/g", authMiddleware, gTestView);
+app.get("/g", authMiddleware.authUserMiddleware, gTestView);
 //Route to Log out
 app.get("/auth/logout", logoutController);
 // View:Route to appointment
-app.get("/appointment", authMiddleware, appointmentView);
+app.get("/appointment", authMiddleware.authUserMiddleware, appointmentView);
+app.get("/examinar", authMiddleware.examinarMiddleware, examinarView);
 // Controller: Route to checkappoitment dates
 app.get("/checkAppointment/:date", checkAppointment);
 // Controller: Route to checkappoitment slots

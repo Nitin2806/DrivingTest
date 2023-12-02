@@ -13,7 +13,21 @@
     <header class="header"></header>
     <div class="container mt-5">
       <h2>Appointment availability</h2>
-      <p>Select appointment slots for a specific date:</p>
+      <% if (typeof error !== 'undefined' && error.length > 1){ %>
+      <p
+        style="
+          color: red;
+          font-weight: bold;
+          text-align: center;
+          font-size: 25px;
+        "
+      >
+        <%= error %>
+      </p>
+      <% }else{ %>
+      <p>Select appointment slots for a specific date</p>
+
+      <% } %>
 
       <!-- Date Input -->
       <form action="/admin/appointments/" method="post">

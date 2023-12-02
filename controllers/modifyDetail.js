@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   const accountID = userObject.accountID;
 
   if (userObject.appointmentTime !== data.timeSlot) {
-    const deleteBooked = await BookedTimeSlot.deleteOne({
+    await BookedTimeSlot.deleteOne({
       date: userObject.appointmentDate,
       time: userObject.appointmentTime,
     });
@@ -31,9 +31,11 @@ module.exports = async (req, res) => {
         },
       }
     );
+
     const updateTimeSlotModel = await BookedTimeSlot.create({
       date: data.date,
       time: data.timeSlot,
+      userId: req.session.userId,
     });
     if (!updateData.acknowledged && !updateTimeSlotModel.acknowledged) {
       return res.render("gtest");
