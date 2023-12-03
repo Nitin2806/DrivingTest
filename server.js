@@ -3,6 +3,7 @@ require("dotenv").config();
 global.loggedIn = null;
 global.userType = null;
 global.userObject = null;
+global.examinerdriverObject = null;
 
 const express = require("express");
 const app = express();
@@ -52,9 +53,11 @@ try {
 }
 
 //----------------------------- C O N T R O L L E R S ---------------------------------------
+
 //Middleware Controller
 const authMiddleware = require("./middleware/authMiddleware");
 const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticatedMiddleware");
+
 // View Controller
 const home = require("./controllers/home");
 const gTestView = require("./controllers/gtest");
@@ -63,6 +66,7 @@ const loginView = require("./controllers/login");
 const signUpView = require("./controllers/signUp");
 const appointmentView = require("./controllers/appointmentController");
 const pageNotFoundView = require("./controllers/notFound");
+
 // Create and Modify Controllers
 const createNewAccount = require("./controllers/createNewAccount");
 const loginController = require("./controllers/loginUserAccount");
@@ -73,7 +77,9 @@ const logoutController = require("./controllers/logout");
 const addTimeSlot = require("./controllers/appointmentAvailability");
 const checkAppointment = require("./controllers/checkAppointment");
 const checkTimeSlot = require("./controllers/checkTimeSlot");
-const examinarView = require("./controllers/examinarController");
+const examinerView = require("./controllers/examinerController");
+const viewUserAppointment = require("./controllers/viewUserAppointmentDetails");
+const examinUserAppointment = require("./controllers/examinUserAppointment");
 
 // ---------------------------- R O U T E S -------------------------------------------------
 
@@ -83,7 +89,6 @@ app.get("/", home);
 app.get("/signup", redirectIfAuthenticatedMiddleware, signUpView);
 // View:Route to Login Page
 app.get("/login", redirectIfAuthenticatedMiddleware, loginView);
-
 // View:Route to G2 Page
 app.get("/g2", authMiddleware.authUserMiddleware, g2TestView);
 // View:Route to G Page
@@ -92,11 +97,15 @@ app.get("/g", authMiddleware.authUserMiddleware, gTestView);
 app.get("/auth/logout", logoutController);
 // View:Route to appointment
 app.get("/appointment", authMiddleware.authUserMiddleware, appointmentView);
-app.get("/examinar", authMiddleware.examinarMiddleware, examinarView);
+
+app.get("/examiner", authMiddleware.examinarMiddleware, examinerView);
 // Controller: Route to checkappoitment dates
 app.get("/checkAppointment/:date", checkAppointment);
 // Controller: Route to checkappoitment slots
 app.get("/checkTimeSlotAvailable/:date", checkTimeSlot);
+
+app.get("/examiner/appointments/:id", viewUserAppointment);
+app.post("/examiner/appointments/:id", examinUserAppointment);
 // Route to Create new user
 app.post("/license/new", createNewUser);
 // Route to modify user licence Details

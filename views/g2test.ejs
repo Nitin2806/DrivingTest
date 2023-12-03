@@ -144,19 +144,25 @@
                   <label for="plateno">Plate Number</label>
                   <div class="invalid-feedback">Plate Number is required.</div>
                 </div>
+                <% if (userObject.pass == true) { %>
+                <h5>Congratulations!! You have passed your G2 Test</h5>
+                <% } else { %>
+
+                <input type="hidden" name="testType" value="G2" />
                 <div class="form-floating">
                   <input
                     type="date"
-                    name="date"
+                    name="G2date"
                     class="form-control"
                     id="bookingAppointmentDate"
-                    value="<%- userObject.appointmentDate -%>"
-                    onchange="getTimeSlot()"
+                    value="<%- userObject.appointmentDate %>"
+                    onchange="getTimeSlot('<%- userObject._id %>')"
                   />
                   <label for="bookingAppointmentDate"
-                    >Select Appointment Date:</label
+                    >Select G2 Appointment Date:</label
                   >
                 </div>
+                <h5 id="headerTimeSlot"></h5>
                 <!-- Display Selected Time Slots -->
                 <div class="mt-3" id="timeSlotsSection" style="display: none">
                   <h5>Select Time Slots:</h5>
@@ -167,7 +173,7 @@
                 </div>
                 <br />
 
-                <!-- Submit Button-->
+                <% } %>
                 <button
                   class="btn btn-primary text-uppercase"
                   id="submitButton"

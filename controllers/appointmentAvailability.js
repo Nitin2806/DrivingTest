@@ -8,6 +8,9 @@ module.exports = async (req, res) => {
         error: "No date or time selected",
       });
     }
+    // const g2Appointments = await AppointmentModel.find({ testType: "G2" });
+    // const gAppointments = await AppointmentModel.find({ testType: "G" });
+
     const existingAppointment = await Appointment.findOne({
       date,
       time,

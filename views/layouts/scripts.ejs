@@ -195,7 +195,6 @@ s
         if (response.ok) {
           const existingAppointments = await response.json();
           const times = existingAppointments.time;
-          console.log("all times script", times);
 
           if (times) {
             times.forEach((appointment) => {
@@ -226,74 +225,103 @@ s
       .addEventListener("change", updateTimeSlotAvailability);
   });
 </script>
-
 <script>
-  async function getTimeSlot() {
+  async function getTimeSlot(sessionId) {
     const form = document.querySelector("form");
     const selectSlotList = document.getElementById("selectSlots");
+    const timeSlotsSection = document.getElementById("timeSlotsSection");
+    const headerTime = document.getElementById("headerTimeSlot");
+
     const selectedDate = document.getElementById(
       "bookingAppointmentDate"
     ).value;
-    const response = await fetch(`checkAppointment/${selectedDate}`);
-    const selectSlots = await response.json();
 
-    const responseTimeSlotBooked = await fetch(
-      `checkTimeSlotAvailable/${selectedDate}`
-    );
-    const timeSlotBooked = await responseTimeSlotBooked.json();
+    try {
+      const response = await fetch(`checkAppointment/${selectedDate}`);
 
-    const jsonSlot = selectSlots.time;
-    let result = [];
-
-    for (let i in jsonSlot) {
-      result.push(jsonSlot[i]);
-    }
-
-    // Display selected slots
-    selectSlotList.innerHTML = "";
-
-    result.forEach((slot) => {
-      const taskDiv = document.createElement("div");
-      const radioInput = document.createElement("input");
-      radioInput.type = "radio";
-      radioInput.name = "timeSlot";
-      radioInput.id = slot;
-      radioInput.value = slot;
-      const label = document.createElement("label");
-      label.htmlFor = slot;
-      label.textContent = slot;
-      if (timeSlotBooked.length != 0 && timeSlotBooked[0].time === slot) {
-        radioInput.disabled = true; // Disable the radio button if the time slot is booked
+      if (!response.ok) {
+        timeSlotsSection.style.display = "none";
+        headerTime.innerHTML = "No Time Slot Available";
+        return;
       }
 
-      taskDiv.appendChild(radioInput);
-      taskDiv.appendChild(label);
+      const selectSlots = await response.json();
 
-      selectSlotList.appendChild(taskDiv);
-    });
-    if (result.length > 0) {
-      timeSlotsSection.style.display = "block";
-    } else {
-      timeSlotsSection.style.display = "none";
-    }
-  }
+      const responseTimeSlotBooked = await fetch(
+        `checkTimeSlotAvailable/${selectedDate}`
+      );
+      if (!responseTimeSlotBooked.ok) {
+        throw new Error(
+          `Error fetching time slots. Status: ${responseTimeSlotBooked.status}`
+        );
+      }
 
-  // event listener to the form to disable other radio buttons when one is selected
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form");
-    if (form) {
-      form.addEventListener("change", function (event) {
-        if (event.target.type === "radio" && event.target.checked) {
-          const selectedRadio = event.target;
-          const radioButtons = form.querySelectorAll('input[type="radio"]');
+      const timeSlotBooked = await responseTimeSlotBooked.json();
 
-          radioButtons.forEach((radio) => {
-            if (radio !== selectedRadio) {
-              radio.checked = false;
+      const jsonSlot = selectSlots.time;
+      let result = [];
+
+      for (let i in jsonSlot) {
+        result.push(jsonSlot[i]);
+      }
+
+      // Display selected slots
+      selectSlotList.innerHTML = "";
+
+      result.forEach((slot) => {
+        const taskDiv = document.createElement("div");
+        const radioInput = document.createElement("input");
+        headerTime.innerHTML = "";
+        radioInput.type = "radio";
+        radioInput.name = "timeSlot";
+        radioInput.id = slot;
+        radioInput.value = slot;
+        const label = document.createElement("label");
+        label.htmlFor = slot;
+        label.textContent = slot;
+
+        for (let i in timeSlotBooked) {
+          if (timeSlotBooked.length != 0 && timeSlotBooked[i].time === slot) {
+            if (timeSlotBooked[i].userId == sessionId) {
+              radioInput.checked = true;
+              break;
+            }
+            radioInput.disabled = true; // Disable the radio button if the time slot is booked
+          }
+        }
+
+        taskDiv.appendChild(radioInput);
+        taskDiv.appendChild(label);
+
+        selectSlotList.appendChild(taskDiv);
+      });
+
+      if (result.length > 0) {
+        timeSlotsSection.style.display = "block";
+      } else {
+        timeSlotsSection.style.display = "none";
+      }
+
+      // event listener to the form to disable other radio buttons when one is selected
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        if (form) {
+          form.addEventListener("change", function (event) {
+            if (event.target.type === "radio" && event.target.checked) {
+              const selectedRadio = event.target;
+              const radioButtons = form.querySelectorAll('input[type="radio"]');
+
+              radioButtons.forEach((radio) => {
+                if (radio !== selectedRadio) {
+                  radio.checked = false;
+                }
+              });
             }
           });
         }
       });
+    } catch (err) {
+      console.error("Internal Error:", err.message);
     }
-  });
+  }
 </script>

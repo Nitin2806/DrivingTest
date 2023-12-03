@@ -1,7 +1,5 @@
-const session = require("../models/session");
-
 module.exports = (req, res, next) => {
-  if (session.userId) {
+  if (req.session.userId) {
     return res.redirect("/"); // if user logged in, redirect to home page
   }
   next();

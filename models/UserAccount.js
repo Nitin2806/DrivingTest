@@ -28,6 +28,9 @@ const SignUpModelSchema = new Schema({
   },
   appointmentDate: String,
   appointmentTime: String,
+  comment: String,
+  pass: { type: Boolean, default: false },
+  testType: { type: String, enum: ["G2", "G"] },
 });
 
 SignUpModelSchema.plugin(uniqueValidator);
