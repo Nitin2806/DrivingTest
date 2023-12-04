@@ -31,6 +31,7 @@ const SignUpModelSchema = new Schema({
   comment: String,
   pass: { type: Boolean, default: false },
   testType: { type: String, enum: ["G2", "G"] },
+  qualified: { type: String, enum: ["G2", "G"] },
 });
 
 SignUpModelSchema.plugin(uniqueValidator);

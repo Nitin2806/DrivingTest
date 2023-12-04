@@ -80,7 +80,8 @@ const checkTimeSlot = require("./controllers/checkTimeSlot");
 const examinerView = require("./controllers/examinerController");
 const viewUserAppointment = require("./controllers/viewUserAppointmentDetails");
 const examinUserAppointment = require("./controllers/examinUserAppointment");
-
+const adminDriverViewController = require("./controllers/adminDriverViewController");
+const vendorPrinting = require("./controllers/vendorPrintingController");
 // ---------------------------- R O U T E S -------------------------------------------------
 
 // View:Route to Home/Dashboard Page
@@ -103,9 +104,13 @@ app.get("/examiner", authMiddleware.examinarMiddleware, examinerView);
 app.get("/checkAppointment/:date", checkAppointment);
 // Controller: Route to checkappoitment slots
 app.get("/checkTimeSlotAvailable/:date", checkTimeSlot);
+// View: Route to User for examiner
+app.get("/examiner/appointments/:id/:testType", viewUserAppointment);
+// View: Route to driver details for admin
+app.get("/checkDriverStatus", adminDriverViewController);
+app.get("/admin/vendor/:id/:testType", vendorPrinting);
 
-app.get("/examiner/appointments/:id", viewUserAppointment);
-app.post("/examiner/appointments/:id", examinUserAppointment);
+app.post("/examiner/appointments/:id/:testType", examinUserAppointment);
 // Route to Create new user
 app.post("/license/new", createNewUser);
 // Route to modify user licence Details

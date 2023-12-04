@@ -53,7 +53,7 @@
 
           <!-- Form for adding comments and marking pass/fail -->
           <form
-            action="/examiner/appointments/<%= driverDetails._id %>"
+            action="/examiner/appointments/<%= driverDetails._id %>/<%= driverDetails.testType %>"
             method="post"
           >
             <div class="mb-3">
@@ -63,6 +63,7 @@
                 id="comment"
                 name="comment"
                 rows="3"
+                value="<%= driverDetails.comment %>"
               ></textarea>
             </div>
 

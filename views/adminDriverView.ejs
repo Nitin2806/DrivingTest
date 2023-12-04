@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <%- include('layouts/head'); -%>
-    <title>Examiner | DriveTest</title>
+    <title>Drivers Status | DriveTest</title>
   </head>
 
   <body>
@@ -29,7 +29,7 @@
     </header>
 
     <div class="container mt-5">
-      <h2>Appointment List</h2>
+      <h2>Driver Status List</h2>
       <h5><%= message %></h5>
       <!-- Display a table with appointment details -->
       <table class="table">
@@ -41,6 +41,7 @@
             <th>Appointment Time</th>
             <th>Test Type</th>
             <th>Remarks</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -59,13 +60,18 @@
             <td><%= appointment.userDetails.appointmentTime %></td>
             <td><%= appointment.testType %></td>
             <td><%= appointment.userDetails.comment %></td>
+            <% if(appointment.userDetails.pass == true){ %>
+            <td style="color: green; font-weight: bold">Pass</td>
             <td>
               <a
-                href="/examiner/appointments/<%= appointment.userDetails._id %>/<%= appointment.userDetails.testType %>"
+                href="/admin/vendor/<%= appointment.userDetails._id %>/<%= appointment.userDetails.testType %>"
                 class="btn btn-primary"
-                >View Details</a
+                >Issue Physical License</a
               >
             </td>
+            <% }else{ %>
+            <td style="color: red; font-weight: bold">Failed</td>
+            <% } %>
           </tr>
           <% }); %>
         </tbody>

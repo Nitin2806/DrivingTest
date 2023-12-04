@@ -3,13 +3,11 @@ const BookedTimeSlot = require("../models/BookedTimeSlot");
 
 module.exports = async (req, res) => {
   const data = req.body;
-  console.log(data);
   //get accountID from global variable
   const accountID = userObject.accountID;
   if (userObject.appointmentTime !== data.timeSlot) {
-    await BookedTimeSlot.deleteOne({
-      date: userObject.appointmentDate,
-      time: userObject.appointmentTime,
+    await BookedTimeSlot.deleteMany({
+      userId: userObject._id,
     });
   }
   if (data.testType == "G") {
@@ -17,6 +15,8 @@ module.exports = async (req, res) => {
       { accountID: accountID },
       {
         $set: {
+          pass: false,
+          comment: "",
           appointmentDate: data.Gdate,
           appointmentTime: data.timeSlot,
           testType: data.testType,
