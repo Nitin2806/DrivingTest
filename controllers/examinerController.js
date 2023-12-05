@@ -3,7 +3,16 @@ const UserAccount = require("../models/UserAccount");
 
 module.exports = async (req, res) => {
   try {
-    const appointments = await BookedTimeSlotModel.find();
+    const { testType } = req.query;
+    let appointments = "";
+    if (testType != undefined) {
+      appointments = await BookedTimeSlotModel.find({
+        testType: testType,
+      });
+    } else {
+      appointments = await BookedTimeSlotModel.find();
+      console.log("non-filtering", appointments);
+    }
 
     const userIds = appointments.map((appointment) => appointment.userId);
 
@@ -17,7 +26,7 @@ module.exports = async (req, res) => {
       ...appointment.toObject(),
       userDetails: userDetailsMap.get(appointment.userId.toString()) || {},
     }));
-    examinerdriverObject = mergedAppointments;
+
     res.render("examiner", {
       appointments: mergedAppointments,
       error: "",

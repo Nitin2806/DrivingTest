@@ -1,3 +1,4 @@
+const BookedTimeSlotModel = require("../models/BookedTimeSlot");
 const UserAccount = require("../models/UserAccount");
 
 module.exports = async (req, res) => {
@@ -12,7 +13,6 @@ module.exports = async (req, res) => {
     } else {
       qualified = false;
     }
-    console.log("Check user status", qualified);
     if (qualified === false) {
       await UserAccount.updateOne(
         { _id: driverId },
@@ -36,10 +36,22 @@ module.exports = async (req, res) => {
       );
     }
 
-    userObject = await UserAccount.findOne({ _id: driverId });
+    const appointments = await BookedTimeSlotModel.find();
 
+    const userIds = appointments.map((appointment) => appointment.userId);
+
+    const userDetails = await UserAccount.find({ _id: { $in: userIds } });
+
+    const userDetailsMap = new Map(
+      userDetails.map((user) => [user._id.toString(), user])
+    );
+
+    const mergedAppointments = appointments.map((appointment) => ({
+      ...appointment.toObject(),
+      userDetails: userDetailsMap.get(appointment.userId.toString()) || {},
+    }));
     res.render("examiner", {
-      appointments: examinerdriverObject,
+      appointments: mergedAppointments,
       message: "User Data Updated",
     });
   } catch (err) {

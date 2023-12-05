@@ -60,9 +60,21 @@
                   Plate Number:
                   <span id="plateno"><%= userObject.carDetails.plateNo %></span>
                 </p>
+                <% if (userObject.testType == "G" ) { %>
+                <h5>G2 Appointment Details</h5>
 
-                <% if (userObject.pass == true && userObject.testType === "G") {
-                %>
+                <p>Appointment Date: <%= userObject.appointmentDate %></p>
+                <p>Appointment Time: <%= userObject.appointmentTime %></p>
+                <% if (userObject.comment != null ) { %>
+                <p>Examiner Comment: <b><%= userObject.comment %></b></p>
+                <% } %>
+                <p style="font-size: 13px; color: gray; font-style: italic">
+                  To change your appointment date and time select a new
+                  appointment date and proceed
+                </p>
+
+                <% } %> <% if (userObject.pass == true && userObject.testType
+                === "G") { %>
                 <h5 style="color: green">
                   Congratulations! Your success in the G Test is acknowledged.
                   <p

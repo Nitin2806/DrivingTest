@@ -27,6 +27,19 @@
         </div>
       </div>
     </header>
+    <!-- Filter Form -->
+    <div class="container mt-3">
+      <form action="/examiner" method="GET">
+        <label for="testType">Filter by Test Type:</label>
+        <select id="testType" name="testType">
+          <option value="">All</option>
+          <option value="G2">G2 Test</option>
+          <option value="G">G Test</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Apply Filter</button>
+      </form>
+    </div>
 
     <div class="container mt-5">
       <h2>Appointment List</h2>

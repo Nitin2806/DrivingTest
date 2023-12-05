@@ -2,7 +2,7 @@
 <html lang="en">
   <%- include('layouts/head'); -%>
   <head>
-    <title>G2 - DriveTest</title>
+    <title>G2 | DriveTest</title>
   </head>
 
   <body>
@@ -150,6 +150,9 @@
 
                 <p>Appointment Date: <%= userObject.appointmentDate %></p>
                 <p>Appointment Time: <%= userObject.appointmentTime %></p>
+                <% if (userObject.comment != null ) { %>
+                <p>Examiner Comment: <b><%= userObject.comment %></b></p>
+                <% } %>
                 <p style="font-size: 13px; color: gray; font-style: italic">
                   To change your appointment date and time select a new
                   appointment date and proceed
